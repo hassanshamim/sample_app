@@ -16,3 +16,4 @@
 
 # Ignore the bin files
 /bin
+Guardfile

@@ -6,10 +6,13 @@ gem 'jquery-rails'
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
+  gem 'guard-rspec'
 end
 
 group :test do
   gem 'capybara'
+  gem 'rb-inotify'
+  gem 'libnotify'
 end
 
 
