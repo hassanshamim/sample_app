@@ -8,7 +8,7 @@ describe "User pages" do
     before{ visit signup_path }
 
     it { should have_selector( 'h1',    text: 'Sign up' ) }
-    it { should have_selector( 'title', text: full_title('Sign up') ) }
+    it { should have_title( 'Sign up' ) }
   end
 
   describe "profile page" do
@@ -16,7 +16,7 @@ describe "User pages" do
     before { visit user_path( user ) }
 
     it { should have_selector( 'h1',    text: user.name ) }
-    it { should have_selector( 'title', text: user.name ) }
+    it { should have_title( user.name ) }
   end
 
   describe "signup" do
@@ -35,22 +35,18 @@ describe "User pages" do
         it { should have_selector('title', text: 'Sign up' ) }
         it { should have_content('error') }
         it { should have_selector('div#error_explanation ul') }
-        it { should have_selector('li', text: "Name can't be blank") }
-        it { should have_selector('li', text: "Email can't be blank") }
-        it { should have_selector('li', text: "Email is invalid") }
-        it { should have_selector('li', text: "Password can't be blank") }
-        it { should have_selector('li', text: "Password is too short") }
-        it { should have_selector('li', text: "Password confirmation can't be blank") }
+        it { should have_error_explainations [
+            "Name can't be blank",
+            "Email can't be blank",
+            "Email is invalid",
+            "Password can't be blank",
+            "Password is too short",
+            "Password confirmation can't be blank" ] }
       end
     end
 
     describe "with valid information" do
-      before do
-        fill_in "Name",         with: "Example_User"
-        fill_in "Email",        with: "user@example.com"
-        fill_in "Password",     with: "foobar"
-        fill_in "Confirmation", with: "foobar"
-      end
+      before { valid_signup }
 
       it "should create a user" do
         expect{ click_button submit }.to change( User, :count ).by(1)
@@ -60,8 +56,8 @@ describe "User pages" do
         before { click_button submit }
         let(:user) { User.find_by_email('user@example.com') }
 
-        it { should have_selector('title', text: user.name) }
-        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+        it { should have_title( user.name ) }
+        it { should have_alert( :success, 'Welcome') }
         it { should have_link('Sign out') }
       end
     end
