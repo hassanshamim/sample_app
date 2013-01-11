@@ -45,7 +45,6 @@ describe "User pages" do
         end
         it { should_not have_link('delete', href: user_path(admin)) }
       end
-
     end
   end
 
@@ -125,7 +124,6 @@ describe "User pages" do
       before { click_button "Save changes" }
 
       it { should have_alert(:error) }
-      #it { current_path.should == edit_user_path( user ) }
     end
 
     describe "with valid information" do

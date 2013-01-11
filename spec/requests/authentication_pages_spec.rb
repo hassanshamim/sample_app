@@ -9,6 +9,10 @@ describe "Authentication" do
 
     it { should have_selector('h1',     text: 'Sign in' ) }
     it { should have_title('Sign in') }
+    it { should_not have_link('Users') }
+    it { should_not have_link('Profile') }
+    it { should_not have_link('Settings') }
+    it { should_not have_link('Sign out') }
 
   end
 
@@ -107,8 +111,30 @@ describe "Authentication" do
       before { valid_signin non_admin }
 
       describe "submitting a DELETE request to the Users#destroy action" do
-        before{ delete user_path(user) }
+        before { delete user_path(user) }
+        specify { response.should redirect_to root_path }
+      end
+
+      describe "submitting a POST request to the Users#create action" do
+        before{ post users_path }
         specify{ response.should redirect_to root_path }
+      end
+
+      describe "visiting the signup page" do
+        before { visit signup_path }
+        it "should redirect to the homepage" do
+          current_path.should == root_path
+        end
+      end
+    end
+
+    describe "as an admin user" do
+      let(:admin) { FactoryGirl.create(:admin) }
+      before{ valid_signin admin }
+
+      describe "attempting to delete himself" do
+        before { delete user_path( admin ) }
+        specify { response.should redirect_to root_path }
       end
     end
   end
