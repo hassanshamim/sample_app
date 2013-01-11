@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       flash[:success] = "You are now logged in."
       sign_in user
-      redirect_to user
+      redirect_back_or user
     else
       flash.now[:error] = "Invalid email/password combination."
       render 'new'
@@ -17,6 +17,6 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    redirect_to root_path :notice => "You are now logged out"
+    redirect_to root_path, :notice => "You are now logged out"
   end
 end

@@ -17,3 +17,6 @@
 # Ignore the bin files
 /bin
 Guardfile
+
+#ignore rake generated docs
+/doc/app/
