@@ -27,18 +27,3 @@ RSpec::Matchers.define :have_error_explainations do | error_list |
   end
 end
 
-RSpec::Matchers.define :have_session_links do | status, user = nil|
-  match do |page|
-  
-  end
-
-  def header_links_when( status )
-    if status == :signed_in
-      page.should have_link('Profile', href: user_path(user))
-      page.should have_link('Sign out', href: signout_path)
-      page.should_not have_link('Sign in', href: signin_path)
-
-    end
-  end
-end
-
