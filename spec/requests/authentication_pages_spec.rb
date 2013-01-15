@@ -115,9 +115,15 @@ describe "Authentication" do
         specify{ response.should redirect_to root_path }
       end
 
-      describe "sumbitting a DELETE request to the Micropost#destroy action" do
+      describe "submitting a DELETE request to the Micropost#destroy action" do
         before { delete micropost_path( micropost) }
         specify { response.should redirect_to(root_path) }
+      end
+
+      describe "visiting a different users profile page" do
+        before { visit user_path(wrong_user) }
+        it { should have_selector('span.content', text: micropost.content) }
+        it { should_not have_link('delete', href: micropost_path(micropost)) }
       end
     end
 

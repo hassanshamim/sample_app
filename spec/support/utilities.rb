@@ -15,3 +15,7 @@ def valid_signup
   fill_in "Password",     with: "foobar"
   fill_in "Confirm Password", with: "foobar"
 end
+
+def random_letters(n)
+  ('a'..'z').to_a.sample(n).join
+end

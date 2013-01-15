@@ -16,6 +16,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'launchy'
   gem 'rb-inotify'
   gem 'libnotify'
   gem 'factory_girl_rails'

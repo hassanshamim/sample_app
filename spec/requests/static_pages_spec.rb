@@ -46,6 +46,54 @@ describe "Static pages" do
           page.should have_selector("li##{item.id}", text: item.content)
         end
       end
+
+      describe "the sidebar micropost count" do
+        it { should have_selector("span", text: "#{user.microposts.count} microposts") }
+
+        describe "after deleting a micropost" do
+          before { click_link 'delete' }
+          specify "user should have one micropost" do
+            user.microposts.count.should == 1
+          end
+          it { should have_selector("span", text: "1 micropost") }
+        end
+
+        describe "after adding a micropost" do
+          before do
+            fill_in 'micropost_content', with: "some content"
+            click_button "Post"
+          end
+
+          specify "user should have three microposts" do
+            user.microposts.count.should == 3
+          end
+
+          it { should have_selector("span", text: "3 microposts") }
+        end
+      end
+
+      describe "feed pagination" do
+        before(:all) do
+          35.times { FactoryGirl.create(:micropost, user: user,
+                                        content: random_letters(10)) }
+        end
+        after(:all) { user.microposts.delete_all }
+
+        it { should have_selector('div.pagination') }
+
+        it "should display the first page of microposts" do
+          user.microposts.paginate(page: 1).each do |micropost|
+            page.should have_selector('span.content', text: micropost.content)
+          end
+        end
+
+        it "should not list the second page of microposts" do 
+          user.microposts.paginate(page: 2).each do |micropost|
+            page.should_not have_selector('span.content',
+                                          text: micropost.content)
+          end
+        end
+      end
     end
   end
 
