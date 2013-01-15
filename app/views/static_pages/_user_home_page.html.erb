@@ -1,3 +1,14 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    $( document ).ready(function() {
+      $('textarea').keyup(function () {
+        var str = 140 - $(this).val().length + " characters left";
+        $('#post_length').text(str);
+      }).keyup();
+    })
+  </script>
+<% end %>
+
 <div class="row">
   <aside class="span4">
     <section>
