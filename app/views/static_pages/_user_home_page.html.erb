@@ -1,18 +1,14 @@
 <% content_for :head do %>
-  <script type="text/javascript">
-    $( document ).ready(function() {
-      $('textarea').keyup(function () {
-        var str = 140 - $(this).val().length + " characters left";
-        $('#post_length').text(str);
-      }).keyup();
-    })
-  </script>
+  <%= render 'static_pages/micropost_text_counter' %>
 <% end %>
 
 <div class="row">
   <aside class="span4">
     <section>
       <%= render 'shared/user_info' %>
+    </section>
+    <section>
+      <%= render 'shared/stats' %>
     </section>
     <section>
       <%= render 'shared/micropost_form' %>

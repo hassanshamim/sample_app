@@ -1,0 +1,8 @@
+<script type="text/javascript">
+  $( document ).ready(function() {
+    $('textarea').keyup(function () {
+      var str = 140 - $(this).val().length + " characters left";
+      $('#post_length').text(str);
+    }).keyup();
+  })
+</script>
